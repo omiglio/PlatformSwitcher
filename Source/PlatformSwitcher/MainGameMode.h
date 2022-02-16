@@ -14,6 +14,8 @@ class PLATFORMSWITCHER_API AMainGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
+public:
+
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -21,4 +23,6 @@ class PLATFORMSWITCHER_API AMainGameMode : public AGameMode
 	bool Switched;
 	
 	void OnSwitch();
+
+	void OnGameOver(bool win);
 };

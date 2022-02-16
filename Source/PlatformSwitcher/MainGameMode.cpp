@@ -39,3 +39,8 @@ void AMainGameMode::OnSwitch()
 
 	Switched = !Switched;
 }
+
+void AMainGameMode::OnGameOver(bool win)
+{
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
