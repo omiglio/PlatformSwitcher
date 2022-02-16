@@ -13,5 +13,12 @@ UCLASS()
 class PLATFORMSWITCHER_API AMainGameMode : public AGameMode
 {
 	GENERATED_BODY()
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	bool Switched;
 	
+	void OnSwitch();
 };
