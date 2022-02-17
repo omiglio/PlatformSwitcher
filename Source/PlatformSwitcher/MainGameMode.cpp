@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "GameWidget.h"
 #include "MainGameMode.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
@@ -7,6 +8,10 @@
 void AMainGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ChangeMenuWidget(StartingWidgetClass);
+
+	((UGameWidget*)CurrentWidget)->Load();
 
 	GetWorld()->GetFirstPlayerController()->InputComponent->
 		BindAction("Switch", IE_Pressed, this, &AMainGameMode::
@@ -43,4 +48,24 @@ void AMainGameMode::OnSwitch()
 void AMainGameMode::OnGameOver(bool win)
 {
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
+
+void AMainGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget>
+	NewWidgetClass)
+{
+	if (CurrentWidget != nullptr)
+	{
+		CurrentWidget->RemoveFromViewport();
+		CurrentWidget = nullptr;
+	}
+
+	if (NewWidgetClass != nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(),
+			NewWidgetClass);
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
+	}
 }
